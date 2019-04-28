@@ -1,0 +1,3 @@
+#!/bin/sh
+
+docker build -t routing . && docker run -v $PWD:/usr/src/treasure-map-routing --rm routing:latest

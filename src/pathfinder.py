@@ -1,15 +1,8 @@
 import argparse
 import ast
-from enum import Enum
 
-
-class TreasureMap:
-    mapType = 0
-    start = -1
-    treasure = -1
-    roads = []
-    dragons = []
-    expectedRoutes = []
+from treasure_finder import TreasureFinder
+from treasure_map import TreasureMap, MapType
 
 
 def main():
@@ -19,26 +12,20 @@ def main():
     treasureMaps = readTreasureMap(args.treasure_maps)
     for missionID, treasureMap in enumerate(treasureMaps):
         print("Starting mission #" + str(missionID + 1) + ":")
-
+        treasure_finder = TreasureFinder(treasureMap)
         if treasureMap.mapType == MapType.NORMAL:
-            # [TODO] call your solution here
-            actualRoute = []
+            actualRoute = treasure_finder.get_shortest_path()
+
         elif treasureMap.mapType == MapType.DRAGON:
             # [TODO] call your solution here
-            actualRoute = []
+            actualRoute = treasure_finder.get_treasure_avoiding_dragons(treasureMap.dragons)
         elif treasureMap.mapType == MapType.RIVALRY:
-            # [TODO] call your solution here
-            actualRoute = []
+            actualRoute = treasure_finder.get_path_avoiding_shortest_path_roads()
 
         evaluateResult(treasureMap.expectedRoutes, actualRoute)
 
 
 # ----------------------------------------------------------------------------
-
-class MapType(Enum):
-    NORMAL = 1
-    DRAGON = 2
-    RIVALRY = 3
 
 
 class bcolors:
