@@ -78,6 +78,16 @@ class Graph:
             return []
 
     def find_all_paths(self, source: int, destination: int) -> List[List[int]]:
+        """
+        Find all the path that exist from source to destination.
+
+        This uses the Depth First Search (DFS) to find all paths that exist in the graph.
+
+        :param source: Starting node
+        :param destination: Destination node
+
+        :return: List of all possible paths that exist
+        """
         result_paths: List[List[int]] = []
         visited: List[bool] = [False for _ in self._vertices.keys()]
 
