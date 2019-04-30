@@ -22,7 +22,7 @@ class TreasureFinder:
 
         :return: return the shortest path if it exists
         """
-        return self._graph.find_path(self._start, self._destination)
+        return self._graph.find_shortest_path(self._start, self._destination)
 
     def get_treasure_avoiding_dragons(self, dragons: List[int]):
         possible_paths: List[List[int]] = self._graph.find_all_paths(self._start, self._destination)
@@ -89,7 +89,7 @@ class TreasureFinder:
         road_segments = self._get_road_segments(shortest_path)
         self._graph.remove_roads(road_segments)
 
-        return self._graph.find_path(self._start, self._destination)
+        return self._graph.find_shortest_path(self._start, self._destination)
 
     @staticmethod
     def _get_road_segments(path: List[int]):

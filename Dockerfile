@@ -3,8 +3,8 @@ ENV LANG en_US.UTF-8
 
 WORKDIR /usr/src/treasure-map-routing
 
-ADD requirements.txt /usr/src/treasure-map-routing/requirements.txt
+COPY . /usr/src/treasure-map-routing
 
-RUN pip install -r requirements.txt
+RUN python -m unittest test/test_graph.py
 
-CMD python  src/pathfinder.py resources/treasure_maps.txt
+CMD python src/pathfinder.py resources/treasure_maps.txt

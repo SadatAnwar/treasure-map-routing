@@ -13,26 +13,21 @@ class Graph:
         self._vertices[node1].append(node2)
         self._vertices[node2].append(node1)
 
-    def remove_node(self, node: int):
-        connections = self._vertices[node]
-        self._vertices[node] = []
-        for n in connections:
-            self._vertices[n].remove(node)
-
     def remove_roads(self, roads: List[Tuple[int, int]]):
-        for road in roads:
-            self.remove_road(road)
-
-    def remove_road(self, road: Tuple[int, int]):
-        self._vertices[road[0]].remove(road[1])
-        self._vertices[road[1]].remove(road[0])
-
-    def find_path(self, source: int, treasure_node: int) -> List[int]:
         """
-        Finds a path from the source till the treasure_node if one exists.
+        Remove the path connecting the 2 nodes
+
+        :param roads: A list of roads to be deleted (a road is denoted by a Tuple[2], start node and end node)
+        """
+        for road in roads:
+            self._remove_road(road)
+
+    def find_shortest_path(self, source: int, treasure_node: int) -> List[int]:
+        """
+        Finds a shortest path from the source till the treasure_node if one exists.
         This method uses the Breadth First Search (BFS) to find the treasure_node, while keeping track of the path taken
 
-        The path returned is the shortest path from source to destination
+        If the graph contains multiple shortest path, it return any one.
 
         :param source: The starting node
         :param treasure_node: The destination node
@@ -44,11 +39,10 @@ class Graph:
         # a list to maintain the predecessor of each node. Initialize by -1 (i.e no predecessor)
         predecessor: List[int] = [-1 for _ in self._vertices.keys()]
 
-        # a list of nodes that need to be inspected
-        nodes_to_follow: List[int] = []
+        # a list of nodes that need to be inspected,
+        # add the source to this list to start off
+        nodes_to_follow: List[int] = [source]
 
-        # Add the source node to the list. (We start looking from here)
-        nodes_to_follow.append(source)
         # Also mark it as visited
         visited[source] = True
 
@@ -95,7 +89,8 @@ class Graph:
 
         return result_paths
 
-    def _depth_traversal(self, start: int, destination: int, path: List[int], visited: List[bool], result_paths: List[List[int]]):
+    def _depth_traversal(self, start: int, destination: int, path: List[int], visited: List[bool],
+                         result_paths: List[List[int]]):
         visited[start] = True
         path.append(start)
         if start == destination:
@@ -108,6 +103,14 @@ class Graph:
                 path.remove(node)
 
         visited[start] = False
+
+    def _remove_road(self, road: Tuple[int, int]):
+
+        if road[1] in self._vertices[road[0]]:
+            # Since both forward and backward direction
+            # roads are added together, if one exists, so will the other
+            self._vertices[road[0]].remove(road[1])
+            self._vertices[road[1]].remove(road[0])
 
     @staticmethod
     def _make_path(destination: int, predecessor: List[int]):
