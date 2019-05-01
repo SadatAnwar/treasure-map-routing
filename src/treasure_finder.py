@@ -24,7 +24,7 @@ class TreasureFinder:
         """
         return self._graph.find_shortest_path(self._start, self._destination)
 
-    def get_treasure_avoiding_dragons(self, dragons: List[int]):
+    def get_treasure_avoiding_dragons(self, dragons: List[int]) -> List[int]:
         """
         For task 2 we need to avoid dragons, but only when they sneeze i.e nodes 3, 6, 9 ... of the path should not
         have a dragon on them. We can circle around 2 previous nodes in order to cross the dragon after its finished
@@ -47,13 +47,9 @@ class TreasureFinder:
             else:
                 possible_paths.append(path)
 
-        if len(possible_paths) > 0:
-            possible_paths.sort(key=lambda l: len(l))
-            return possible_paths[0]
-        else:
-            return []
+        return self._get_shortest_list(possible_paths)
 
-    def get_path_avoiding_shortest_path_roads(self):
+    def get_path_avoiding_shortest_path_roads(self) -> List[int]:
         """
         For task 3 we need to avoid the rodes taken by the annoying neighbour. We also know that the neighbour will be
         taking the shortest path. So, we can simply find the shortest path, and then remove all the rodes it contains from
@@ -68,8 +64,20 @@ class TreasureFinder:
         return self._graph.find_shortest_path(self._start, self._destination)
 
     @staticmethod
+    def _get_shortest_list(possible_paths: List[List[int]]) -> List[int]:
+        if len(possible_paths) > 0:
+            possible_paths.sort(key=lambda l: len(l))
+            return possible_paths[0]
+        else:
+            return []
+
+    @staticmethod
     def _will_burn(path, dragons):
         return any([path[i] in dragons for i in range(3, len(path), 3)])
+
+    @staticmethod
+    def _get_road_segments(path: List[int]):
+        return [(path[i - 1], path[i]) for i in range(1, len(path))]
 
     def _circle_before_dragon(self, path, dragons) -> Optional[List[int]]:
         """
@@ -106,7 +114,3 @@ class TreasureFinder:
             self._circle_before_dragon(path, dragons)
         else:
             return path
-
-    @staticmethod
-    def _get_road_segments(path: List[int]):
-        return [(path[i - 1], path[i]) for i in range(1, len(path))]
