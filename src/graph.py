@@ -35,9 +35,9 @@ class Graph:
         """
 
         # Mark all the vertices as not visited
-        visited: List[bool] = [False for _ in self._vertices.keys()]
-        # a list to maintain the predecessor of each node. Initialize by -1 (i.e no predecessor)
-        predecessor: List[int] = [-1 for _ in self._vertices.keys()]
+        visited: Dict[int, bool] = {k: False for k in self._vertices.keys()}
+        # a dict to maintain the predecessor of each node. Initialize by -1 (i.e no predecessor)
+        predecessor: Dict[int, int] = {k: -1 for k in self._vertices.keys()}
 
         # a list of nodes that need to be inspected,
         # add the source to this list to start off
@@ -83,13 +83,13 @@ class Graph:
         :return: List of all possible paths that exist
         """
         result_paths: List[List[int]] = []
-        visited: List[bool] = [False for _ in self._vertices.keys()]
+        visited: Dict[int, bool] = {k: False for k in self._vertices.keys()}
 
         self._depth_traversal(source, destination, [], visited, result_paths)
 
         return result_paths
 
-    def _depth_traversal(self, start: int, destination: int, path: List[int], visited: List[bool],
+    def _depth_traversal(self, start: int, destination: int, path: List[int], visited: Dict[int, bool],
                          result_paths: List[List[int]]):
         visited[start] = True
         path.append(start)
@@ -113,7 +113,7 @@ class Graph:
             self._vertices[road[1]].remove(road[0])
 
     @staticmethod
-    def _make_path(destination: int, predecessor: List[int]):
+    def _make_path(destination: int, predecessor: Dict[int, int]):
         """
         This method returns the path from start to destination in an array.
         It constructs the path by starting at the destination and then back tracking till the end, thereby reaching

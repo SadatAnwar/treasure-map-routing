@@ -1,8 +1,8 @@
 import argparse
 import ast
 
-from treasure_finder import TreasureFinder
-from treasure_map import TreasureMap, MapType
+from src.treasure_finder import TreasureFinder
+from src.treasure_map import MapType, TreasureMap
 
 
 def main():
@@ -13,11 +13,10 @@ def main():
     for missionID, treasureMap in enumerate(treasureMaps):
         print("Starting mission #" + str(missionID + 1) + ":")
         treasure_finder = TreasureFinder(treasureMap)
+
         if treasureMap.mapType == MapType.NORMAL:
             actualRoute = treasure_finder.get_shortest_path()
-
         elif treasureMap.mapType == MapType.DRAGON:
-            # [TODO] call your solution here
             actualRoute = treasure_finder.get_treasure_avoiding_dragons(treasureMap.dragons)
         elif treasureMap.mapType == MapType.RIVALRY:
             actualRoute = treasure_finder.get_path_avoiding_shortest_path_roads()
