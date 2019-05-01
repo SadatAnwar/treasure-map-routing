@@ -87,7 +87,7 @@ of the treasure w.r.t the mountains)
   
 
 ## Solution execution
-I have implemented the solution in python for a single reasons: **The setup was provided in python, it was easy to get started, and I could reuse ALL of the provided code.**
+I have implemented the solution in python because: **The setup was provided in python, it was easy to get started, and I could reuse ALL of the provided code.**
 
 The project uses python types to give much nicer function definitions and also enable to IDE to assist and help with 
 code completion. You will therefore need at least python 3.6 (Docker image uses python 3.7). 
