@@ -1,5 +1,7 @@
 # Treasure Map Routing
 
+<img width="733" alt="map" src="resources/map.png">
+
 ## Solution Description
 ### Problem 1: Find the shortest path
 
